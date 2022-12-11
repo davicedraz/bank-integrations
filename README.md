@@ -2,9 +2,17 @@
 
 A simple bank aggregation application that pulls information from multiple different banks and displays it.
 
+## Setup
+
+Install all dependencies
+
+```bash
+npm install
+```
+
 ## Test
 
-Just run the following command in order to start the test suite and log results:
+Start the test suite and log application results:
 
 ```bash
 npm test
