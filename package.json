@@ -10,12 +10,14 @@
     "npm": ">=8.0.0 <9.0.0",
     "node": "19.2.0"
   },
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/davicedraz/pynne-challenge-bank.git"
+  },
+  "devDependencies": {
+    "vitest": "^0.25.7"
   }
 }
