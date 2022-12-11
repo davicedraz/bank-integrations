@@ -8,6 +8,7 @@ export interface IBankTransaction {
   currency?: string;
   description: string;
   type: BankTransactionType;
+  createdAt: Date;
 }
 
 export class BankTransaction {
@@ -15,12 +16,14 @@ export class BankTransaction {
   private currency: string;
   private description: string;
   private type: BankTransactionType;
+  private createdAt: Date;
 
   constructor(transaction: IBankTransaction) {
+    this.type = transaction.type;
     this.amount = transaction.amount;
     this.description = transaction.description;
-    this.type = transaction.type;
     this.currency = transaction.currency || "USD";
+    this.createdAt = transaction.createdAt || new Date();
   }
 
   public getAmount(): number {
@@ -37,6 +40,10 @@ export class BankTransaction {
 
   public getType(): BankTransactionType {
     return this.type;
+  }
+
+  public getCreatedAt(): Date {
+    return this.createdAt;
   }
 
 }
