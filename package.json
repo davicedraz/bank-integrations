@@ -1,0 +1,21 @@
+{
+  "name": "pynne-challenge-bank",
+  "version": "1.0.0",
+  "description": "Pynne technical challenge: a simple bank aggregation application that pulls information from multiple different banks and displays it",
+  "author": {
+    "name": "Davi Cedraz",
+    "email": "davioler@gmail.com"
+  },
+  "engines": {
+    "npm": ">=8.0.0 <9.0.0",
+    "node": "19.2.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davicedraz/pynne-challenge-bank.git"
+  }
+}
