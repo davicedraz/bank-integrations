@@ -1,7 +1,7 @@
 {
   "name": "pynne-challenge-bank",
   "version": "1.0.0",
-  "description": "Pynne technical challenge: a simple bank aggregation application that pulls information from multiple different banks and displays it",
+  "description": "Pynne technical challenge: a simple bank aggregation",
   "author": {
     "name": "Davi Cedraz",
     "email": "davioler@gmail.com"
@@ -19,5 +19,8 @@
   },
   "devDependencies": {
     "vitest": "^0.25.7"
+  },
+  "dependencies": {
+    "uuid": "^9.0.0"
   }
 }
