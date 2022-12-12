@@ -12,9 +12,14 @@ export class Bank1Adapter extends BankIntegrationService {
 
   public async getBalance(accountId: number): Promise<BankAccountBalance> {
     this.checkAccountId(accountId);
-
-    const currentBalance = await this.bankAccountSource.getAccountBalance(accountId)
-    return new BankAccountBalance({ accountNumber: accountId, total: currentBalance });
+    const currentBalance = await this.bankAccountSource.getAccountBalance(accountId);
+    const accountCurrency = await this.bankAccountSource.getAccountCurrency(accountId);
+    
+    return new BankAccountBalance({ 
+      accountNumber: accountId, 
+      total: currentBalance,
+      currency: accountCurrency
+    });
   }
 
   protected handleTransactionType(type: number): BankTransactionType {

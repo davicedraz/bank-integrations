@@ -3,11 +3,16 @@
   DEBIT = 'DEBIT'
 }
 
+export enum BankTransactionCurrency {
+  USD = 'USD',
+  BRL = 'BRL'
+}
+
 export interface IBankTransaction {
   accountNumber: number;
   amount: number;
-  currency?: string;
   description: string;
+  currency?: BankTransactionCurrency;
   type: BankTransactionType;
   createdAt?: Date;
 }
@@ -15,8 +20,8 @@ export interface IBankTransaction {
 export class BankTransaction {
   private accountNumber: number;
   private amount: number;
-  private currency: string;
   private description: string;
+  private currency: BankTransactionCurrency;
   private type: BankTransactionType;
   private createdAt: Date;
 
@@ -25,7 +30,7 @@ export class BankTransaction {
     this.type = transaction.type;
     this.amount = transaction.amount;
     this.description = transaction.description;
-    this.currency = transaction.currency || "USD";
+    this.currency = transaction.currency || BankTransactionCurrency.USD;
     this.createdAt = transaction.createdAt || new Date();
   }
 
@@ -36,13 +41,13 @@ export class BankTransaction {
   public getAmount(): number {
     return this.amount;
   }
-
-  public getCurrency(): string {
-    return this.currency;
-  }
-
+  
   public getDescription(): string {
     return this.description;
+  }
+  
+  public getCurrency(): BankTransactionCurrency {
+    return this.currency;
   }
 
   public getType(): BankTransactionType {

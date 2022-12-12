@@ -1,17 +1,19 @@
-﻿export interface IBankAccountBalance {
+﻿import { BankTransactionCurrency } from "./BankTransaction";
+
+export interface IBankAccountBalance {
   total: number;
   accountNumber: number;
-  currency?: string;
+  currency: BankTransactionCurrency;
 };
 
 export class BankAccountBalance {
   private accountNumber: number;
   private total: number;
-  private currency: string;
+  private currency: BankTransactionCurrency;
 
   constructor(balance: IBankAccountBalance) {
     this.total = balance.total;
-    this.currency = balance.currency || "USD";
+    this.currency = balance.currency;
     this.accountNumber = balance.accountNumber;
   }
 
@@ -19,7 +21,7 @@ export class BankAccountBalance {
     return this.total;
   }
 
-  public getCurrency(): string {
+  public getCurrency(): BankTransactionCurrency {
     return this.currency;
   }
 
