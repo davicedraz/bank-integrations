@@ -42,5 +42,3 @@ describe('transactions', () => {
 //está na estrutura correta dos modelos?
 // os tipos dos valores estão corretos?
 // 
-
-//assertType<number>(answer)

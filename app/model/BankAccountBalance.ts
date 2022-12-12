@@ -1,20 +1,18 @@
-﻿import { v4 as uuidv4 } from 'uuid';
-
-export interface IBankAccountBalance {
+﻿export interface IBankAccountBalance {
   total: number;
-  bankId?: string;
+  accountNumber: number;
   currency?: string;
 };
 
 export class BankAccountBalance {
-  private bankId: string;
+  private accountNumber: number;
   private total: number;
   private currency: string;
 
   constructor(balance: IBankAccountBalance) {
     this.total = balance.total;
     this.currency = balance.currency || "USD";
-    this.bankId = balance.bankId || uuidv4();
+    this.accountNumber = balance.accountNumber;
   }
 
   public getTotal(): number {
@@ -25,8 +23,8 @@ export class BankAccountBalance {
     return this.currency;
   }
 
-  public getBankId(): string {
-    return this.bankId;
+  public getAccountNumber(): number {
+    return this.accountNumber;
   }
 
 }
