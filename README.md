@@ -17,7 +17,7 @@ At last, the `BankAdapters` also take advantage of Dependency Injection: by tran
 
 ## Setup & Run
 
-Make sure you have installed the following:
+This Node.js project uses typescript, which will be automatically installed as a development dependency. However, make sure your environment has the following at least:
 - [node.js](https://nodejs.org/en/download/)
 - npm
 
