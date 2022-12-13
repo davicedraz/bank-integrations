@@ -10,32 +10,37 @@ export enum BankTransactionCurrency {
 
 export interface IBankTransaction {
   accountNumber: number;
+  bankCode: number;
   amount: number;
   description: string;
   currency?: BankTransactionCurrency;
   type: BankTransactionType;
-  createdAt?: Date;
 }
 
 export class BankTransaction {
+  
   private accountNumber: number;
+  private bankCode: number;
   private amount: number;
   private description: string;
   private currency: BankTransactionCurrency;
   private type: BankTransactionType;
-  private createdAt: Date;
 
   constructor(transaction: IBankTransaction) {
     this.accountNumber = transaction.accountNumber;
+    this.bankCode = transaction.bankCode;
     this.type = transaction.type;
     this.amount = transaction.amount;
     this.description = transaction.description;
     this.currency = transaction.currency || BankTransactionCurrency.USD;
-    this.createdAt = transaction.createdAt || new Date();
   }
 
   public getAccountNumber(): number {
     return this.accountNumber;
+  }
+
+  public getBankCode(): number {
+    return this.bankCode;
   }
 
   public getAmount(): number {
@@ -52,10 +57,6 @@ export class BankTransaction {
 
   public getType(): BankTransactionType {
     return this.type;
-  }
-
-  public getCreatedAt(): Date {
-    return this.createdAt;
   }
 
 }

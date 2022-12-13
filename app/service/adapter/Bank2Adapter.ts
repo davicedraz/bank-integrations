@@ -7,6 +7,7 @@ export class Bank2Adapter extends BankIntegrationService {
 
   constructor() {
     super();
+    this.BANK_CODE = 2;
     this.bankAccountSource = new Bank2AccountSource();
   }
 
@@ -16,12 +17,13 @@ export class Bank2Adapter extends BankIntegrationService {
 
     return new BankAccountBalance({
       accountNumber: accountId,
-      total: currentBalance.getBalance(),
+      bankCode: this.BANK_CODE,
+      amount: currentBalance.getBalance(),
       currency: currentBalance.getCurrency()
     });
   }
 
-  protected handleTransactionType(type: number): BankTransactionType {
+  public handleTransactionType(type: number): BankTransactionType {
     switch (type) {
       case 0:
         return BankTransactionType.DEBIT;

@@ -7,6 +7,7 @@ export class Bank1Adapter extends BankIntegrationService {
 
   constructor() {
     super();
+    this.BANK_CODE = 1;
     this.bankAccountSource = new Bank1AccountSource();
   }
 
@@ -14,15 +15,16 @@ export class Bank1Adapter extends BankIntegrationService {
     this.checkAccountId(accountId);
     const currentBalance = await this.bankAccountSource.getAccountBalance(accountId);
     const accountCurrency = await this.bankAccountSource.getAccountCurrency(accountId);
-    
-    return new BankAccountBalance({ 
-      accountNumber: accountId, 
-      total: currentBalance,
+
+    return new BankAccountBalance({
+      accountNumber: accountId,
+      bankCode: this.BANK_CODE,
+      amount: currentBalance,
       currency: accountCurrency
     });
   }
 
-  protected handleTransactionType(type: number): BankTransactionType {
+  public handleTransactionType(type: number): BankTransactionType {
     switch (type) {
       case 1:
         return BankTransactionType.CREDIT;

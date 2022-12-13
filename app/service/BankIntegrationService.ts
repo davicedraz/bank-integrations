@@ -4,10 +4,12 @@ import { BankTransaction, BankTransactionType } from '../model/BankTransaction';
 export interface IBankIntegrationService {
   getBalance(bankId: number): Promise<BankAccountBalance>;
   getTransactions(accountId: number, from: Date, to?: Date): Promise<BankTransaction[]>;
+  handleTransactionType(type: number): BankTransactionType;
 }
 
 export class BankIntegrationService implements IBankIntegrationService {
-
+  
+  public BANK_CODE: number = 999;
   protected bankAccountSource: any;
 
   public async getTransactions(accountId: number, from: Date, to?: Date): Promise<BankTransaction[]> {
@@ -19,6 +21,7 @@ export class BankIntegrationService implements IBankIntegrationService {
 
       return new BankTransaction({
         accountNumber: accountId,
+        bankCode: this.BANK_CODE,
         amount: transaction.getAmount(),
         description: transaction.getText(),
         type: transactionType
@@ -30,7 +33,7 @@ export class BankIntegrationService implements IBankIntegrationService {
     throw new Error("getBalance method implementation is required");
   }
 
-  protected handleTransactionType(type: number): BankTransactionType {
+  public handleTransactionType(type: number): BankTransactionType {
     throw new Error("handleTransactionType method implementation is required");
   }
 
