@@ -5,14 +5,12 @@ import { BankAccountBalance } from '../../model/BankAccountBalance';
 
 export class Bank2Adapter extends BankIntegrationService {
 
-  constructor() {
-    super();
+  constructor(protected bankAccountSource: Bank2AccountSource) {
+    super(bankAccountSource);
     this.BANK_CODE = 2;
-    this.bankAccountSource = new Bank2AccountSource();
   }
 
   public async getBalance(accountId: number): Promise<BankAccountBalance> {
-    this.checkAccountId(accountId);
     const currentBalance = await this.bankAccountSource.getBalance(accountId);
 
     return new BankAccountBalance({

@@ -1,18 +1,18 @@
 ﻿import { BankTransactionCurrency } from "./BankTransaction";
 
 export interface IBankAccountBalance {
-  amount: number;
-  bankCode: number;
   accountNumber: number;
-  currency: BankTransactionCurrency;
+  bankCode: number;
+  amount: number;
+  currency: BankTransactionCurrency | string;
 };
 
 export class BankAccountBalance {
-  
+
   private accountNumber: number;
   private bankCode: number;
   private amount: number;
-  private currency: BankTransactionCurrency;
+  private currency: BankTransactionCurrency | string;;
 
   constructor(balance: IBankAccountBalance) {
     this.accountNumber = balance.accountNumber;
@@ -33,7 +33,7 @@ export class BankAccountBalance {
     return this.amount;
   }
 
-  public getCurrency(): BankTransactionCurrency {
+  public getCurrency(): BankTransactionCurrency | string {
     return this.currency;
   }
 

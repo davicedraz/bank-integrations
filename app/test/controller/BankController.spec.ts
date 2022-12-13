@@ -1,4 +1,4 @@
-﻿import { expect, test, describe, assertType, vi, afterEach } from 'vitest';
+﻿import { expect, test, describe, assertType, vi, afterEach, it} from 'vitest';
 
 import { BankController } from '../../controller/BankController';
 import { BankTransaction } from './../../model/BankTransaction';
@@ -21,12 +21,22 @@ describe('pulls balance from all bank integrations and print it', () => {
 	test('fetch balances from 2 different banks with the same account number', async () => {
 		const balances = await bankController.fetchAllBalances(1);
 
-		expect(balances.length).toBe(2);
-		expect(balances[0].getAccountNumber()).toEqual(1);
-		expect(balances[1].getAccountNumber()).toEqual(1);
-		expect(balances[0].getBankCode()).not.toEqual(balances[1].getBankCode());
+		it('should return 2 account balances', () => {
+			expect(balances.length).toBe(2);
+		});
 
-		assertType<Array<BankAccountBalance>>(balances);
+		it('should have the same account number', () => {
+			expect(balances[0].getAccountNumber()).toEqual(1);
+			expect(balances[1].getAccountNumber()).toEqual(1);
+		});
+
+		it('should have different bank codes', () => {
+			expect(balances[0].getBankCode()).not.toEqual(balances[1].getBankCode());
+		});
+
+		it('should be BankAccountBalances', () => {
+			assertType<Array<BankAccountBalance>>(balances);
+		});
 	});
 
 	test('print to the console balances pulled from the 2 bank integrations', async () => {
@@ -35,8 +45,13 @@ describe('pulls balance from all bank integrations and print it', () => {
 
 		await bankController.printBalances();
 
-		expect(fetchAllBalancesSpy).toHaveBeenCalledOnce();
-		expect(consoleSpy).toHaveBeenCalledTimes(2);
+		it('should fetch balances before print it', () => {
+			expect(fetchAllBalancesSpy).toHaveBeenCalledOnce();
+		});
+
+		it('should print 2 balances', () => {
+			expect(consoleSpy).toHaveBeenCalledTimes(2);
+		});
 	})
 });
 
@@ -53,11 +68,18 @@ describe('pulls transactions from all bank integrations and print it', () => {
 			.flatMap(transactions => transactions)
 			.filter(transaction => transaction.getBankCode() == 2);
 
-		expect(arrayOfTransactions.length).toBe(2);
-		expect(bank1Transactions[0].getBankCode()).not.toEqual(bank2Transactions[0].getBankCode());
+		it('should return 2 array of bank transactions', () => {
+			expect(arrayOfTransactions.length).toBe(2);
+		});
 
-		assertType<Array<BankTransaction>>(bank1Transactions);
-		assertType<Array<BankTransaction>>(bank2Transactions);
+		it('should have different bank codes', () => {
+			expect(bank1Transactions[0].getBankCode()).not.toEqual(bank2Transactions[0].getBankCode());
+		});
+
+		it('should be BankTransactions', () => {
+			assertType<Array<BankTransaction>>(bank1Transactions);
+			assertType<Array<BankTransaction>>(bank2Transactions);
+		});
 	});
 
 	test('print to the console all transactions pulled from the 2 bank integrations', async () => {
@@ -66,7 +88,12 @@ describe('pulls transactions from all bank integrations and print it', () => {
 
 		await bankController.printTransactions();
 
-		expect(fetchAllTransactionsSpy).toHaveBeenCalledOnce();
-		expect(consoleSpy).toHaveBeenCalledTimes(2);
+		it('should fetch transactions before print it', () => {
+			expect(fetchAllTransactionsSpy).toHaveBeenCalledOnce();
+		});
+		
+		it('should print 2 transactions arrays', () => {
+			expect(consoleSpy).toHaveBeenCalledTimes(2);
+		});
 	})
 });

@@ -7,13 +7,15 @@ export interface IBankIntegrationService {
   handleTransactionType(type: number): BankTransactionType;
 }
 
-export class BankIntegrationService implements IBankIntegrationService {
-  
+export abstract class BankIntegrationService implements IBankIntegrationService {
+
   public BANK_CODE: number = 999;
-  protected bankAccountSource: any;
+
+  constructor(protected bankAccountSource: any) {
+    this.bankAccountSource = bankAccountSource;
+  }
 
   public async getTransactions(accountId: number, from: Date, to?: Date): Promise<BankTransaction[]> {
-    this.checkAccountId(accountId);
     const transactions = await this.bankAccountSource.getTransactions(accountId, from, to || new Date());
 
     return transactions.map(((transaction: any) => {
@@ -37,9 +39,4 @@ export class BankIntegrationService implements IBankIntegrationService {
     throw new Error("handleTransactionType method implementation is required");
   }
 
-  protected checkAccountId(accountId: number) {
-    if (!accountId || typeof accountId !== "number") {
-      throw new Error("accountId is required and must be a number");
-    }
-  }
 }

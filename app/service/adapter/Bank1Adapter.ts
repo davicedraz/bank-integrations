@@ -1,23 +1,21 @@
 ﻿import { BankIntegrationService } from '../BankIntegrationService';
+import { BankAccountBalance } from '../../model/BankAccountBalance';
 import { BankTransactionType } from '../../model/BankTransaction';
 import { Bank1AccountSource } from '../../../bank-integrations/bank1/integration/Bank1AccountSource';
-import { BankAccountBalance } from '../../model/BankAccountBalance';
 
 export class Bank1Adapter extends BankIntegrationService {
 
-  constructor() {
-    super();
+  constructor(protected bankAccountSource: Bank1AccountSource) {
+    super(bankAccountSource);
     this.BANK_CODE = 1;
-    this.bankAccountSource = new Bank1AccountSource();
   }
 
-  public async getBalance(accountId: number): Promise<BankAccountBalance> {
-    this.checkAccountId(accountId);
-    const currentBalance = await this.bankAccountSource.getAccountBalance(accountId);
-    const accountCurrency = await this.bankAccountSource.getAccountCurrency(accountId);
+  public async getBalance(accountNumber: number): Promise<BankAccountBalance> {
+    const currentBalance = await this.bankAccountSource.getAccountBalance(accountNumber);
+    const accountCurrency = await this.bankAccountSource.getAccountCurrency(accountNumber);
 
     return new BankAccountBalance({
-      accountNumber: accountId,
+      accountNumber: accountNumber,
       bankCode: this.BANK_CODE,
       amount: currentBalance,
       currency: accountCurrency

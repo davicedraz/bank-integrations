@@ -1,18 +1,25 @@
 ﻿import {assertType, expect, test} from 'vitest';
+
 import { BankAccountBalance } from '../../model/BankAccountBalance';
+import { BankTransactionCurrency } from '../../model/BankTransaction';
 
-test('create a new instance of BankAccountBallance with all needed properties', () =>{
-  const balance = new BankAccountBalance({bankId: 1, total: 1000});
+test('create a new instance of BankAccountBallance with all required properties', () =>{
+  const balance = new BankAccountBalance({
+    accountNumber: 1, 
+    bankCode: 1,
+    amount: 1000,
+    currency: BankTransactionCurrency.USD,
+  });
 
-  const total = balance.getTotal();
+  const amount = balance.getAmount();
   const currency = balance.getCurrency();
-  const bankId = balance.getBankId();
+  const bankCode = balance.getBankCode();
 
   expect(balance).toBeInstanceOf(BankAccountBalance);
-  expect(total).toEqual(1000);
+  expect(amount).toEqual(1000);
   expect(currency).toEqual("USD");
 
-  assertType<number>(bankId);
-  assertType<number>(total);
+  assertType<number>(bankCode);
+  assertType<number>(amount);
   assertType<string>(currency);
 })

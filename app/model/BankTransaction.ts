@@ -13,7 +13,7 @@ export interface IBankTransaction {
   bankCode: number;
   amount: number;
   description: string;
-  currency?: BankTransactionCurrency;
+  currency?: BankTransactionCurrency | string;
   type: BankTransactionType;
 }
 
@@ -23,7 +23,7 @@ export class BankTransaction {
   private bankCode: number;
   private amount: number;
   private description: string;
-  private currency: BankTransactionCurrency;
+  private currency: BankTransactionCurrency | string;
   private type: BankTransactionType;
 
   constructor(transaction: IBankTransaction) {
@@ -51,7 +51,7 @@ export class BankTransaction {
     return this.description;
   }
   
-  public getCurrency(): BankTransactionCurrency {
+  public getCurrency(): BankTransactionCurrency | string {
     return this.currency;
   }
 
