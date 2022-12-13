@@ -1,5 +1,5 @@
-﻿import { BankAccountBalance } from '../model/BankAccountBalance';
-import { BankTransaction } from '../model/BankTransaction';
+﻿import { BankTransaction } from '../model/BankTransaction';
+import { BankAccountBalance } from '../model/BankAccountBalance';
 import { IBankIntegrationService } from '../service/BankIntegrationService';
 
 /**
@@ -20,16 +20,14 @@ export class BankController {
 		this.toDate = new Date(process.env.FETCH_TRANSACTIONS_TO_DATE || '');
 	}
 
-	public printBalances() {
-		this.fetchAllBalances(this.accountNumber).then(results => {
-			results.forEach((balance => console.log(balance)));
-		});
+	public async printBalances() {
+		const balances = await this.fetchAllBalances(this.accountNumber);
+		balances.forEach((balance => console.log(balance)));
 	}
 
-	public printTransactions() {
-		this.fetchAllTransactions(this.accountNumber, this.fromDate, this.toDate).then(results => {
-			results.forEach((transactions => console.log(transactions)));
-		});
+	public async printTransactions() {
+		const transactions = await this.fetchAllTransactions(this.accountNumber, this.fromDate, this.toDate);
+		transactions.forEach((transactions => console.log(transactions)));
 	}
 
 	public fetchAllBalances(accountNumber: number): Promise<BankAccountBalance[]> {

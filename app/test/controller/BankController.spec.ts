@@ -1,44 +1,72 @@
-﻿import { beforeAll, expect, test, describe, vi } from 'vitest';
+﻿import { expect, test, describe, assertType, vi, afterEach } from 'vitest';
+
 import { BankController } from '../../controller/BankController';
+import { BankTransaction } from './../../model/BankTransaction';
+import { BankAccountBalance } from '../../model/BankAccountBalance';
+import { BankIntegrationServiceMock } from '../mocks/BankIntegrationService.mock';
 
-const bankController = new BankController();
+//Mocks
+const bank1ServiceMock = BankIntegrationServiceMock({ accountNumber: 1, bankCode: 1 });
+const bank2ServiceMock = BankIntegrationServiceMock({ accountNumber: 1, bankCode: 2 });
 
-const getBalancesSpy = vi.spyOn(bankController, 'getBalances');
-const getTransactionsSpy = vi.spyOn(bankController, 'getTransactions'); 
+// Test subject
+const bankController = new BankController(bank1ServiceMock, bank2ServiceMock);
 
-beforeAll(() => {
-	console.log("Printing all balances and transactions pulled from bank integrations: \n");
-	
-	bankController.printBalances();
-	bankController.printTransactions();
+afterEach(() => {
+	vi.clearAllMocks()
 });
 
-test('application runs properly', () => {
-	expect(getBalancesSpy).toHaveBeenCalled();
-	expect(getTransactionsSpy).toHaveBeenCalled();
-});
+describe('pulls balance from all bank integrations and print it', () => {
 
-describe('balances', () => {
-	
-	test('pulls balance from each bank integration', () => {
+	test('fetch balances from 2 different banks with the same account number', async () => {
+		const balances = await bankController.fetchAllBalances(1);
 
+		expect(balances.length).toBe(2);
+		expect(balances[0].getAccountNumber()).toEqual(1);
+		expect(balances[1].getAccountNumber()).toEqual(1);
+		expect(balances[0].getBankCode()).not.toEqual(balances[1].getBankCode());
 
-
+		assertType<Array<BankAccountBalance>>(balances);
 	});
+
+	test('print to the console balances pulled from the 2 bank integrations', async () => {
+		const fetchAllBalancesSpy = vi.spyOn(bankController, 'fetchAllBalances');
+		const consoleSpy = vi.spyOn(console, 'log');
+
+		await bankController.printBalances();
+
+		expect(fetchAllBalancesSpy).toHaveBeenCalledOnce();
+		expect(consoleSpy).toHaveBeenCalledTimes(2);
+	})
 });
 
-describe('transactions', () => {
+describe('pulls transactions from all bank integrations and print it', () => {
 
-	test('pulls all transactions from each bank integration', () => {
+	test('fetch all transactions from 2 different banks, with the same account number and given dates', async () => {
+		const arrayOfTransactions = await bankController.fetchAllTransactions(1, new Date('2022-01-01'), new Date());
 
+		const bank1Transactions = arrayOfTransactions
+			.flatMap(transactions => transactions)
+			.filter(transaction => transaction.getBankCode() == 1);
 
+		const bank2Transactions = arrayOfTransactions
+			.flatMap(transactions => transactions)
+			.filter(transaction => transaction.getBankCode() == 2);
 
+		expect(arrayOfTransactions.length).toBe(2);
+		expect(bank1Transactions[0].getBankCode()).not.toEqual(bank2Transactions[0].getBankCode());
+
+		assertType<Array<BankTransaction>>(bank1Transactions);
+		assertType<Array<BankTransaction>>(bank2Transactions);
 	});
+
+	test('print to the console all transactions pulled from the 2 bank integrations', async () => {
+		const fetchAllTransactionsSpy = vi.spyOn(bankController, 'fetchAllTransactions');
+		const consoleSpy = vi.spyOn(console, 'log');
+
+		await bankController.printTransactions();
+
+		expect(fetchAllTransactionsSpy).toHaveBeenCalledOnce();
+		expect(consoleSpy).toHaveBeenCalledTimes(2);
+	})
 });
-
-
-
-// deve ser testado 
-//está na estrutura correta dos modelos?
-// os tipos dos valores estão corretos?
-// 
