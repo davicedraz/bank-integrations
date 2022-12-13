@@ -1,15 +1,14 @@
-﻿# Pynne technical challenge
+# Pynne technical challenge
 
 A simple bank aggregation application that pulls information from multiple different banks and displays it.
-----------------------------------------------------------------
 
-### Project dependencies:
+#### Project dependencies:
 - vitest*
 - dotenv
 - ts-node
 - typescript
 
-#### *Why `vitest`? 
+##### *Why `vitest`? 
 I took advantage of the project to test a new test library that I had never used, as an alternative to the well-known [Jest](https://jestjs.io/).
 
 To test typescript files, we need to transpile them during testing. [Vitest](https://vitest.dev/) do that natively, so we don't need to deal with the complexity of transforming source files. Watch mode is enabled by default, aligning itself with the way Vite pushes for a dev first experience. Also, Vitest cares a lot about performance and uses Worker threads to run as much as possible in parallel.
