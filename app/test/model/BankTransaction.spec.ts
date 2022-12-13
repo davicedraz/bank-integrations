@@ -14,10 +14,10 @@ test('create a new instance of BankTransaction with all required properties', ()
   const description = transaction.getDescription();
 
   expect(transaction).toBeInstanceOf(BankTransaction);
-  expect(bankCode).toEqual(2);
-  expect(transaction.getAmount()).toEqual(500);
-  expect(transaction.getCurrency()).toEqual("USD");
-  expect(transaction.getType()).toEqual("DEBIT")
+  expect(bankCode).toBe(2);
+  expect(transaction.getAmount()).toBe(500);
+  expect(transaction.getCurrency()).toBe("USD");
+  expect(transaction.getType()).toBe("DEBIT")
 
   assertType<string>(description);
   assertType<number>(bankCode);

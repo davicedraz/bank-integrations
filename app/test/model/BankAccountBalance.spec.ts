@@ -16,8 +16,8 @@ test('create a new instance of BankAccountBallance with all required properties'
   const bankCode = balance.getBankCode();
 
   expect(balance).toBeInstanceOf(BankAccountBalance);
-  expect(amount).toEqual(1000);
-  expect(currency).toEqual("USD");
+  expect(amount).toBe(1000);
+  expect(currency).toBe("USD");
 
   assertType<number>(bankCode);
   assertType<number>(amount);

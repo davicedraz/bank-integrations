@@ -28,7 +28,7 @@ export class Bank2Adapter extends BankIntegrationService {
       case 1:
         return BankTransactionType.CREDIT;
       default:
-        throw new Error("Unexpected transaction type: " + type);
+        throw new Error(`Unexpected transaction type: (${type})`);
     }
   }
 

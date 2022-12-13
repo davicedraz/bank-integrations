@@ -1,4 +1,4 @@
-﻿import { expect, test, describe, assertType, vi, afterEach, it} from 'vitest';
+﻿import { expect, describe, assertType, vi, afterEach, it } from 'vitest';
 
 import { BankController } from '../../controller/BankController';
 import { BankTransaction } from './../../model/BankTransaction';
@@ -18,7 +18,7 @@ afterEach(() => {
 
 describe('pulls balance from all bank integrations and print it', () => {
 
-	test('fetch balances from 2 different banks with the same account number', async () => {
+	describe('fetch balances from 2 different banks with the same account number', async () => {
 		const balances = await bankController.fetchAllBalances(1);
 
 		it('should return 2 account balances', () => {
@@ -26,12 +26,12 @@ describe('pulls balance from all bank integrations and print it', () => {
 		});
 
 		it('should have the same account number', () => {
-			expect(balances[0].getAccountNumber()).toEqual(1);
-			expect(balances[1].getAccountNumber()).toEqual(1);
+			expect(balances[0].getAccountNumber()).toBe(1);
+			expect(balances[1].getAccountNumber()).toBe(1);
 		});
 
 		it('should have different bank codes', () => {
-			expect(balances[0].getBankCode()).not.toEqual(balances[1].getBankCode());
+			expect(balances[0].getBankCode()).not.toBe(balances[1].getBankCode());
 		});
 
 		it('should be BankAccountBalances', () => {
@@ -39,17 +39,17 @@ describe('pulls balance from all bank integrations and print it', () => {
 		});
 	});
 
-	test('print to the console balances pulled from the 2 bank integrations', async () => {
+	describe('print to the console balances pulled from the 2 bank integrations', () => {
 		const fetchAllBalancesSpy = vi.spyOn(bankController, 'fetchAllBalances');
 		const consoleSpy = vi.spyOn(console, 'log');
 
-		await bankController.printBalances();
-
-		it('should fetch balances before print it', () => {
+		it('should fetch balances before print it', async () => {
+			await bankController.printBalances();
 			expect(fetchAllBalancesSpy).toHaveBeenCalledOnce();
 		});
 
-		it('should print 2 balances', () => {
+		it('should print 2 balances', async () => {
+			await bankController.printBalances();
 			expect(consoleSpy).toHaveBeenCalledTimes(2);
 		});
 	})
@@ -57,7 +57,7 @@ describe('pulls balance from all bank integrations and print it', () => {
 
 describe('pulls transactions from all bank integrations and print it', () => {
 
-	test('fetch all transactions from 2 different banks, with the same account number and given dates', async () => {
+	describe('fetch all transactions from 2 different banks, with the same account number and given dates', async () => {
 		const arrayOfTransactions = await bankController.fetchAllTransactions(1, new Date('2022-01-01'), new Date());
 
 		const bank1Transactions = arrayOfTransactions
@@ -82,17 +82,17 @@ describe('pulls transactions from all bank integrations and print it', () => {
 		});
 	});
 
-	test('print to the console all transactions pulled from the 2 bank integrations', async () => {
+	describe('print to the console all transactions pulled from the 2 bank integrations', () => {
 		const fetchAllTransactionsSpy = vi.spyOn(bankController, 'fetchAllTransactions');
 		const consoleSpy = vi.spyOn(console, 'log');
 
-		await bankController.printTransactions();
-
-		it('should fetch transactions before print it', () => {
+		it('should fetch transactions before print it', async () => {
+			await bankController.printTransactions();
 			expect(fetchAllTransactionsSpy).toHaveBeenCalledOnce();
 		});
-		
-		it('should print 2 transactions arrays', () => {
+
+		it('should print 2 transactions arrays', async () => {
+			await bankController.printTransactions();
 			expect(consoleSpy).toHaveBeenCalledTimes(2);
 		});
 	})

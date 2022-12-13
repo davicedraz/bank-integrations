@@ -29,7 +29,7 @@ export class Bank1Adapter extends BankIntegrationService {
       case 2:
         return BankTransactionType.DEBIT;
       default:
-        throw new Error("Unexpected transaction type: " + type);
+        throw new Error(`Unexpected transaction type: (${type})`);
     }
   }
 
