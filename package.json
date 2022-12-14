@@ -1,7 +1,7 @@
 {
-  "name": "pynne-challenge-bank",
+  "name": "bank-integrations",
   "version": "1.0.0",
-  "description": "Pynne technical challenge: a simple bank aggregation",
+  "description": "Bank integrations display: a simple bank aggregation",
   "author": {
     "name": "Davi Cedraz",
     "email": "davioler@gmail.com"
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davicedraz/pynne-challenge-bank.git"
+    "url": "git+https://github.com/davicedraz/bank-integrations.git"
   },
   "devDependencies": {
     "@types/node": "^18.11.13",
