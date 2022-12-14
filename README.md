@@ -1,4 +1,4 @@
-# Pynne technical challenge
+# Bank integrations display
 
   *A simple bank aggregation application that pulls information from multiple different banks and displays it. The challenge here is that we don’t want the BankController to ever directly use any classes in the `com.bank1` and `com.bank2` packages*
 
@@ -42,11 +42,11 @@ npm start
 
 ## Test
 
-I took advantage of the project to test a new test library that I had never used, as an alternative to the well-known [Jest](https://jestjs.io/).
+I took advantage of the project to test a new test library that I had never used: [Vitest](https://vitest.dev/), as an alternative to the well-known [Jest](https://jestjs.io/).
 
 ### *Why `vitest`? 
 
-To test typescript files, we need to transpile them during testing. [Vitest](https://vitest.dev/) do that natively, so we don't need to deal with the complexity of transforming source files. Watch mode is enabled by default, aligning itself with the way Vite pushes for a dev first experience. Also, Vitest cares a lot about performance and uses Worker threads to run as much as possible in parallel.
+*To test typescript files, we need to transpile them during testing. Vitest do that natively, so we don't need to deal with the complexity of transforming source files. Watch mode is enabled by default, aligning itself with the way Vite pushes for a dev first experience. Also, Vitest cares a lot about performance and uses Worker threads to run as much as possible in parallel.*
 
 I found it interesting and it turned out to be really useful and fast.
 
